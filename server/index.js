@@ -24,7 +24,7 @@ const __dirname = path.dirname(__filename); //only with <type: module> in packag
 dotenv.config();
 const app = express();
 app.use(express.json());
-app.use(helmet);
+app.use(helmet());
 app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
 app.use(morgan);
 app.use(morgan("common"));
