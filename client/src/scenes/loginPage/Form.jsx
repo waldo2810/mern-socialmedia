@@ -77,9 +77,8 @@ const Form = () => {
 
   const login = async (values, onSubmitProps) => {
     const loggedInResponse = await fetch("http://localhost:3001/auth/login", {
-      mode: "cors",
       method: "POST",
-      headers: { "Access-Control-Allow-Origin": "*", "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify(values),
     });
     const loggedIn = await loggedInResponse.json();
@@ -237,6 +236,7 @@ const Form = () => {
             </Button>
             <Typography
               onClick={() => {
+                //TODO FIX NOT WORKING
                 setPageType(isLogin ? "register" : "login");
                 resetForm();
               }}
@@ -260,6 +260,7 @@ const Form = () => {
 };
 
 export default Form;
+
 // import { useState } from "react";
 // import {
 //   Box,
@@ -313,23 +314,23 @@ export default Form;
 //   const { palette } = useTheme();
 //   const dispatch = useDispatch();
 //   const navigate = useNavigate();
-//   const isNonMobile = useMediaQuery("(min-width: 600px)");
+//   const isNonMobile = useMediaQuery("(min-width:600px)");
 //   const isLogin = pageType === "login";
 //   const isRegister = pageType === "register";
 
 //   const register = async (values, onSubmitProps) => {
-//     //this allows us to send form info with image
+//     // this allows us to send form info with image
 //     const formData = new FormData();
 //     for (let value in values) {
 //       formData.append(value, values[value]);
 //     }
 //     formData.append("picturePath", values.picture.name);
 
-//     const saveUserResponse = await fetch("http://localhost:3001/auth/register", {
+//     const savedUserResponse = await fetch("http://localhost:3001/auth/register", {
 //       method: "POST",
 //       body: formData,
 //     });
-//     const savedUser = await saveUserResponse.json();
+//     const savedUser = await savedUserResponse.json();
 //     onSubmitProps.resetForm();
 
 //     if (savedUser) {
@@ -338,17 +339,23 @@ export default Form;
 //   };
 
 //   const login = async (values, onSubmitProps) => {
-//     const loggedInResponse = await fetch("http://localhost:3001/auth/register", {
+//     const loggedInResponse = await fetch("http://localhost:3001/auth/login", {
+//       mode: "cors",
 //       method: "POST",
-//       header: { "Content-type": "application/json" },
+//       headers: { "Access-Control-Allow-Origin": "*", "Content-Type": "application/json" },
 //       body: JSON.stringify(values),
 //     });
 //     const loggedIn = await loggedInResponse.json();
 //     onSubmitProps.resetForm();
 //     if (loggedIn) {
-//       dispatch(setLogin({ user: loggedIn.user, token: loggedIn.token }));
+//       dispatch(
+//         setLogin({
+//           user: loggedIn.user,
+//           token: loggedIn.token,
+//         })
+//       );
+//       navigate("/home");
 //     }
-//     navigate("/home");
 //   };
 
 //   const handleFormSubmit = async (values, onSubmitProps) => {
@@ -375,14 +382,14 @@ export default Form;
 //           <Box
 //             display='grid'
 //             gap='30px'
-//             gridTemplateColumns='repeat(4,minmax(0,1fr))'
+//             gridTemplateColumns='repeat(4, minmax(0, 1fr))'
 //             sx={{
 //               "& > div": { gridColumn: isNonMobile ? undefined : "span 4" },
 //             }}>
 //             {isRegister && (
 //               <>
 //                 <TextField
-//                   label='first name'
+//                   label='First Name'
 //                   onBlur={handleBlur}
 //                   onChange={handleChange}
 //                   value={values.firstName}
@@ -392,7 +399,7 @@ export default Form;
 //                   sx={{ gridColumn: "span 2" }}
 //                 />
 //                 <TextField
-//                   label='last name'
+//                   label='Last Name'
 //                   onBlur={handleBlur}
 //                   onChange={handleChange}
 //                   value={values.lastName}
@@ -402,24 +409,24 @@ export default Form;
 //                   sx={{ gridColumn: "span 2" }}
 //                 />
 //                 <TextField
-//                   label='location'
+//                   label='Location'
 //                   onBlur={handleBlur}
 //                   onChange={handleChange}
 //                   value={values.location}
 //                   name='location'
 //                   error={Boolean(touched.location) && Boolean(errors.location)}
 //                   helperText={touched.location && errors.location}
-//                   sx={{ gridColumn: "span 2" }}
+//                   sx={{ gridColumn: "span 4" }}
 //                 />
 //                 <TextField
-//                   label='occupation'
+//                   label='Occupation'
 //                   onBlur={handleBlur}
 //                   onChange={handleChange}
 //                   value={values.occupation}
 //                   name='occupation'
 //                   error={Boolean(touched.occupation) && Boolean(errors.occupation)}
 //                   helperText={touched.occupation && errors.occupation}
-//                   sx={{ gridColumn: "span 2" }}
+//                   sx={{ gridColumn: "span 4" }}
 //                 />
 //                 <Box
 //                   gridColumn='span 4'
@@ -437,10 +444,10 @@ export default Form;
 //                         {...getRootProps()}
 //                         border={`2px dashed ${palette.primary.main}`}
 //                         p='1rem'
-//                         sx={{ cursor: "pointer" }}>
+//                         sx={{ "&:hover": { cursor: "pointer" } }}>
 //                         <input {...getInputProps()} />
 //                         {!values.picture ? (
-//                           <p>add a picture</p>
+//                           <p>Add Picture Here</p>
 //                         ) : (
 //                           <FlexBetween>
 //                             <Typography>{values.picture.name}</Typography>
@@ -453,8 +460,9 @@ export default Form;
 //                 </Box>
 //               </>
 //             )}
+
 //             <TextField
-//               label='email'
+//               label='Email'
 //               onBlur={handleBlur}
 //               onChange={handleChange}
 //               value={values.email}
@@ -464,7 +472,7 @@ export default Form;
 //               sx={{ gridColumn: "span 4" }}
 //             />
 //             <TextField
-//               label='password'
+//               label='Password'
 //               type='password'
 //               onBlur={handleBlur}
 //               onChange={handleChange}
@@ -488,7 +496,7 @@ export default Form;
 //                 color: palette.background.alt,
 //                 "&:hover": { color: palette.primary.main },
 //               }}>
-//               {isLogin ? "sign in" : "sign up"}
+//               {isLogin ? "LOGIN" : "REGISTER"}
 //             </Button>
 //             <Typography
 //               onClick={() => {
@@ -496,14 +504,16 @@ export default Form;
 //                 resetForm();
 //               }}
 //               sx={{
-//                 cursor: "pointer",
-//                 color: palette.primary.main,
 //                 textDecoration: "underline",
-//                 "&:hover": { color: palette.primary.light },
+//                 color: palette.primary.main,
+//                 "&:hover": {
+//                   cursor: "pointer",
+//                   color: palette.primary.light,
+//                 },
 //               }}>
 //               {isLogin
-//                 ? "don't have an account yet? sign up here"
-//                 : "already have an account? sign in here"}
+//                 ? "Don't have an account? Sign Up here."
+//                 : "Already have an account? Login here."}
 //             </Typography>
 //           </Box>
 //         </form>
