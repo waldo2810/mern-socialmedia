@@ -25,7 +25,7 @@ import { setMode, setLogout } from "state";
 import { useNavigate } from "react-router-dom";
 import FlexBetween from "components/FlexBetween";
 
-const NavBar = () => {
+const Navbar = () => {
   const [isMobileMenuToggled, setIsMobileMenuToggled] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -46,7 +46,7 @@ const NavBar = () => {
       <FlexBetween gap='1.75rem'>
         <Typography
           fontWeight='bold'
-          fontSize='clamp(1rem,2rem,2.25rem)'
+          fontSize='clamp(1rem, 2rem, 2.25rem)'
           color='primary'
           onClick={() => navigate("/home")}
           sx={{
@@ -55,7 +55,7 @@ const NavBar = () => {
               cursor: "pointer",
             },
           }}>
-          Socialmedia
+          socialmedia
         </Typography>
         {isNonMobileScreens && (
           <FlexBetween
@@ -63,13 +63,14 @@ const NavBar = () => {
             borderRadius='9px'
             gap='3rem'
             padding='0.1rem 1.5rem'>
-            <InputBase placeholder='search...' />
+            <InputBase placeholder='Search...' />
             <IconButton>
               <Search />
             </IconButton>
           </FlexBetween>
         )}
       </FlexBetween>
+
       {/* DESKTOP NAV */}
       {isNonMobileScreens ? (
         <FlexBetween gap='2rem'>
@@ -91,8 +92,13 @@ const NavBar = () => {
                 width: "150px",
                 borderRadius: "0.25rem",
                 p: "0.25rem 1rem",
-                "& .MuiSvgIcon-root": { pr: "0.25rem", width: "3rem" },
-                "& .MuiSelect-select:focus": { backgroundColor: neutralLight },
+                "& .MuiSvgIcon-root": {
+                  pr: "0.25rem",
+                  width: "3rem",
+                },
+                "& .MuiSelect-select:focus": {
+                  backgroundColor: neutralLight,
+                },
               }}
               input={<InputBase />}>
               <MenuItem value={fullName}>
@@ -114,7 +120,7 @@ const NavBar = () => {
           position='fixed'
           right='0'
           bottom='0'
-          height='100px'
+          height='100%'
           zIndex='10'
           maxWidth='500px'
           minWidth='300px'
@@ -125,6 +131,7 @@ const NavBar = () => {
               <Close />
             </IconButton>
           </Box>
+
           {/* MENU ITEMS */}
           <FlexBetween
             display='flex'
@@ -150,8 +157,13 @@ const NavBar = () => {
                   width: "150px",
                   borderRadius: "0.25rem",
                   p: "0.25rem 1rem",
-                  "& .MuiSvgIcon-root": { pr: "0.25rem", width: "3rem" },
-                  "& .MuiSelect-select:focus": { backgroundColor: neutralLight },
+                  "& .MuiSvgIcon-root": {
+                    pr: "0.25rem",
+                    width: "3rem",
+                  },
+                  "& .MuiSelect-select:focus": {
+                    backgroundColor: neutralLight,
+                  },
                 }}
                 input={<InputBase />}>
                 <MenuItem value={fullName}>
@@ -167,4 +179,4 @@ const NavBar = () => {
   );
 };
 
-export default NavBar;
+export default Navbar;

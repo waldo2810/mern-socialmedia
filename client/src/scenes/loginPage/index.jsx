@@ -15,6 +15,7 @@ const LoginPage = () => {
           socialmedia
         </Typography>
       </Box>
+
       <Box
         width={isNonMobileScreens ? "50%" : "93%"}
         p='2rem'
@@ -22,7 +23,7 @@ const LoginPage = () => {
         borderRadius='1.5rem'
         backgroundColor={theme.palette.background.alt}>
         <Typography fontWeight='500' variant='h5' sx={{ mb: "1.5rem" }}>
-          Welcome to Socialmedia, your social media.
+          Welcome to socialmedia, the the social media for sociopaths!
         </Typography>
         <Form />
       </Box>
