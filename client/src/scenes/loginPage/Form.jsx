@@ -71,19 +71,16 @@ const Form = () => {
   };
 
   const register = async (values, onSubmitProps) => {
+    const formData = new FormData();
     await uploadImage(values.picture, "6b703fa836c99acd8b924bbc0f32494b").then(
       (resp) => {
-        console.log("from resp: " + resp.data.data.display_url);
-        setUrlToImg(resp.data.data.display_url);
+        formData.append("picturePath", resp.data.data.display_url);
       }
     );
-    console.log("from state: " + urlToImg);
     // this allows us to send form info with image
-    const formData = new FormData();
     for (let value in values) {
       formData.append(value, values[value]);
     }
-    formData.append("picturePath", urlToImg);
 
     const savedUserResponse = await fetch(
       "http://localhost:3001/auth/register",
