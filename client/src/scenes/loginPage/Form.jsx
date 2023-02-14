@@ -1,4 +1,5 @@
 import { useState } from "react";
+import axios from "axios";
 import {
   Box,
   Button,
@@ -48,6 +49,7 @@ const initialValuesLogin = {
 
 const Form = () => {
   const [pageType, setPageType] = useState("login");
+  const [urlToImg, setUrlToImg] = useState("");
   const { palette } = useTheme();
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -55,13 +57,33 @@ const Form = () => {
   const isLogin = pageType === "login";
   const isRegister = pageType === "register";
 
+  //first upload the image to imgbb
+  const uploadImage = (img, apiKey) => {
+    let body = new FormData();
+    body.set("key", apiKey);
+    body.append("image", img);
+
+    return axios({
+      method: "post",
+      url: "https://api.imgbb.com/1/upload",
+      data: body,
+    });
+  };
+
   const register = async (values, onSubmitProps) => {
+    await uploadImage(values.picture, "6b703fa836c99acd8b924bbc0f32494b").then(
+      (resp) => {
+        console.log("from resp: " + resp.data.data.display_url);
+        setUrlToImg(resp.data.data.display_url);
+      }
+    );
+    console.log("from state: " + urlToImg);
     // this allows us to send form info with image
     const formData = new FormData();
     for (let value in values) {
       formData.append(value, values[value]);
     }
-    formData.append("picturePath", values.picture.name);
+    formData.append("picturePath", urlToImg);
 
     const savedUserResponse = await fetch(
       "http://localhost:3001/auth/register",
@@ -71,6 +93,7 @@ const Form = () => {
       }
     );
     const savedUser = await savedUserResponse.json();
+
     onSubmitProps.resetForm();
 
     if (savedUser) {
