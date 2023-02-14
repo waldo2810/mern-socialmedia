@@ -158,7 +158,11 @@ export const posts = [
       [userIds[3], true],
       [userIds[4], true],
     ]),
-    comments: ["random comment", "another random comment", "yet another random comment"],
+    comments: [
+      "random comment",
+      "another random comment",
+      "yet another random comment",
+    ],
   },
   {
     _id: new mongoose.Types.ObjectId(),
