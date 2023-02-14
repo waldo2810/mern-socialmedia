@@ -1,5 +1,5 @@
 import { useState } from "react";
-import axios from "axios";
+import { uploadImage } from "utils/uploadImg";
 import {
   Box,
   Button,
@@ -55,19 +55,6 @@ const Form = () => {
   const isNonMobile = useMediaQuery("(min-width:600px)");
   const isLogin = pageType === "login";
   const isRegister = pageType === "register";
-
-  //first upload the image to imgbb
-  const uploadImage = (img, apiKey) => {
-    let body = new FormData();
-    body.set("key", apiKey);
-    body.append("image", img);
-
-    return axios({
-      method: "post",
-      url: "https://api.imgbb.com/1/upload",
-      data: body,
-    });
-  };
 
   const register = async (values, onSubmitProps) => {
     const formData = new FormData();

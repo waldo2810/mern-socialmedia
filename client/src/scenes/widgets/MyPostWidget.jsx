@@ -1,3 +1,9 @@
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { setPosts } from "state";
+
+import { uploadImage } from "utils/uploadImg";
+
 import {
   EditOutlined,
   DeleteOutlined,
@@ -12,13 +18,11 @@ import {
   Button,
   IconButton,
 } from "@mui/material";
+
 import FlexBetween from "components/FlexBetween";
 import Dropzone from "react-dropzone";
 import UserImage from "components/UserImage";
 import WidgetWrapper from "components/WidgetWrapper";
-import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { setPosts } from "state";
 
 const MyPostWidget = ({ picturePath }) => {
   const dispatch = useDispatch();
@@ -36,8 +40,12 @@ const MyPostWidget = ({ picturePath }) => {
     formData.append("userId", _id);
     formData.append("description", post);
     if (image) {
-      formData.append("picture", image);
-      formData.append("picturePath", image.name);
+      await uploadImage(image, "6b703fa836c99acd8b924bbc0f32494b").then(
+        (resp) => {
+          formData.append("picture", image);
+          formData.append("picturePath", resp.data.data.display_url);
+        }
+      );
     }
 
     const response = await fetch(`http://localhost:3001/posts`, {
